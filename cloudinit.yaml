@@ -1,0 +1,48 @@
+#cloud-config
+#source: https://github.com/mvallim/kubernetes-under-the-hood/blob/improve-docs/data/debian/kube/user-data
+#test cloud init file with: https://cloudinit.readthedocs.io/en/latest/topics/tutorial.html#lxd-tutorial
+write_files:
+
+- path: /etc/sysctl.d/10-kubernetes.conf
+  permissions: '0644'
+  content: |
+    net.bridge.bridge-nf-call-iptables=1
+    net.ipv4.ip_forward=1
+    net.bridge.bridge-nf-call-ip6tables=1
+
+packages: 
+  - apt-transport-https
+  - vim
+  - wget
+  - gnupg2
+  - software-properties-common
+  - ca-certificates
+  - bridge-utils
+  - curl
+  - uidmap
+  - bash-completion
+  - gpg
+
+runcmd:
+  - modprobe overlay
+  - modprobe br_netfilter
+  - sysctl --system
+  - curl -sS https://download.docker.com/linux/ubuntu/gpg | gpg --dearmor -o /etc/apt/trusted.gpg.d/docker.gpg
+  - curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/kubernetes-apt-keyring.gpg
+  - echo 'deb [signed-by=/etc/apt/trusted.gpg.d/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+  - apt update
+  - apt install -y containerd kubeadm=1.28.1-1.1 kubelet=1.28.1-1.1 kubectl=1.28.1-1.1
+  - apt-mark hold kubeadm kubelet kubectl 
+
+users:
+- name: student
+  gecos: Debian User
+  sudo: ALL=(ALL) NOPASSWD:ALL
+  shell: /bin/bash
+  lock_passwd: true
+- name: root
+  lock_passwd: true
+
+locale: en_US.UTF-8
+timezone: Europe/Amsterdam
+package_upgrade: true

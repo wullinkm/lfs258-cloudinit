@@ -1,0 +1,18 @@
+{
+    "image": "mcr.microsoft.com/vscode/devcontainers/base:ubuntu-22.04",
+    "features": {
+     "ghcr.io/devcontainers/features/terraform:1": {
+        "version": "latest",
+        "installTFsec": "true"
+      }
+    },
+    "customizations": {
+      "vscode": {
+        "extensions": [
+          "HashiCorp.terraform", 
+          "pascalreitermann93.vscode-yaml-sort"
+        ]
+      }
+    }
+  }
+  

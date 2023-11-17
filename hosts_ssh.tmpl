@@ -1,0 +1,6 @@
+%{ for index, group in hostnames ~}
+ssh ${ssh_username}@${ hostips[index] }
+%{ endfor ~}
+%{ for index, group in workers ~}
+ssh ${ssh_username}@${ workerips[index] }
+%{ endfor ~}
