@@ -1,13 +1,13 @@
 # kubeadm cloud init file for ubuntu 20.04 #
 
-This repository contains an cloud init file that can be used to prepare for the LFS258 exam.
-Additionaly there are some terraform files to test installing kubernetes with kubeadm on hetzner.
+This repository contains a cloud init file that can be used to prepare for the LFS258 exam.
+Additionally there are some terraform files to test installing kubernetes with kubeadm on hetzner.
 Below are some very coarse instructions but if you are following the LFS258 (Certified Kubernetes Administrator CKA) course it will make sense.
 
 ## Running the scripts in this repository ##
-To test this script you can deploy a VM with any cloud provider that supports cloud-init. You can do this manually or you can test this setup with hetzner cloud using the terraform files isn this repository.
+To test this script you can deploy a VM with any cloud provider that supports cloud-init. You can do this manually or you can test this setup with hetzner cloud using the terraform files in this repository.
 
-To setup an hetzner account sign up [here](https://hetzner.cloud/?ref=h5eQUyhOof7b) (this is an affiliate link).
+To setup a Hetzner account sign up [here](https://hetzner.cloud/?ref=h5eQUyhOof7b) (this is an affiliate link).
 Once you have an account you'll need to [create an API key](https://docs.hetzner.com/cloud/api/getting-started/generating-api-token/)
 Provide the API key to terraform when requested or create an [.tfvars file](https://developer.hashicorp.com/terraform/language/values/variables#variable-definitions-tfvars-files).
 
@@ -64,7 +64,7 @@ echo 'complete -o default -F __start_kubectl k' >>~/.bashrc
 87.55.x.1 k8scp
 87.55.x.1 worker
 ```
-2. on server `k8scp` execure: `sudo kubeadm token create` to create an token.
+2. on server `k8scp` execute: `sudo kubeadm token create` to create an token.
 3. create validation hash for worker node to join:
 ```
 openssl x509 -pubkey \
